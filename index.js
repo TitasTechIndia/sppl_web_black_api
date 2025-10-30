@@ -178,7 +178,7 @@ app.post("/share-your-profile", upload.single("documents"), async (req, res) => 
     }
 
     // ✅ Load & Build Email Template
-    const templatePath = path.join(__dirname, "templates/contactUs.html");
+    const templatePath = path.join(__dirname, "templates/shareYourProfile.html");
     let htmlTemplate = fs.readFileSync(templatePath, "utf8");
 
     htmlTemplate = htmlTemplate

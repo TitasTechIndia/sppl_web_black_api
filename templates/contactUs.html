@@ -1,65 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <title>New Inquiry</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f6f9fc;
+      background-color: #f7f7f7;
       margin: 0;
       padding: 20px;
     }
-    .email-box {
-      background: #ffffff;
-      padding: 25px;
-      border-radius: 10px;
-      max-width: 650px;
-      margin: auto;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-      border: 1px solid #e0e0e0;
+    .container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 600px;
     }
     h2 {
+      color: #0066cc;
+      margin-bottom: 10px;
+    }
+    .label {
+      font-weight: bold;
       color: #333;
-      text-align: center;
-      border-bottom: 2px solid #0077ff;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
     }
-    ul {
-      padding: 0;
-      margin: 0;
-      list-style: none;
+    .value {
+      margin-bottom: 12px;
+      color: #555;
     }
-    li {
-      background: #fafafa;
-      margin: 8px 0;
-      padding: 12px 15px;
-      border-radius: 6px;
-      border-left: 4px solid #0077ff;
-      font-size: 15px;
-    }
-    strong {
-      color: #000;
+    .footer {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #777;
+      border-top: 1px solid #eee;
+      padding-top: 10px;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h2>📬 New Inquiry Received</h2>
 
-  <div class="email-box">
-    <h2>New Contact Submission</h2>
+    <div>
+      <span class="label">Full Name:</span>
+      <div class="value">{{full_name}}</div>
+    </div>
 
-    <ul>
-      <li><strong>Full Name:</strong> {{full_name}}</li>
-      <li><strong>Phone:</strong> {{phone}}</li>
-      <li><strong>Email:</strong> {{email}}</li>
-      <li><strong>What describes you best:</strong> {{what_describes_you_best}}</li>
-      <li><strong>Years of Experience (YOE):</strong> {{YOE}}</li>
-      <li><strong>Highest Qualification:</strong> {{highest_qualification}}</li>
-      <li><strong>Current Organization:</strong> {{current_org}}</li>
-      <li><strong>Location:</strong> {{location}}</li>
-    </ul>
+    <div>
+      <span class="label">Phone Number:</span>
+      <div class="value">{{phone_number}}</div>
+    </div>
+
+    <div>
+      <span class="label">Email:</span>
+      <div class="value">{{email_id}}</div>
+    </div>
+
+    <div>
+      <span class="label">Organization:</span>
+      <div class="value">{{organization}}</div>
+    </div>
+
+    <div>
+      <span class="label">Subject:</span>
+      <div class="value">{{subject}}</div>
+    </div>
+
+    <div>
+      <span class="label">Inquiry Details:</span>
+      <div class="value">{{inquiry_details}}</div>
+    </div>
+
+    <div class="footer">
+      This email was automatically generated from website contact form.
+    </div>
 
   </div>
-
 </body>
 </html>

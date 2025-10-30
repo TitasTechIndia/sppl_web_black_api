@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f9fc;
+      margin: 0;
+      padding: 20px;
+    }
+    .email-box {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 650px;
+      margin: auto;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      border: 1px solid #e0e0e0;
+    }
+    h2 {
+      color: #333;
+      text-align: center;
+      border-bottom: 2px solid #0077ff;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    li {
+      background: #fafafa;
+      margin: 8px 0;
+      padding: 12px 15px;
+      border-radius: 6px;
+      border-left: 4px solid #0077ff;
+      font-size: 15px;
+    }
+    strong {
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="email-box">
+    <h2>New Contact Submission</h2>
+
+    <ul>
+      <li><strong>Full Name:</strong> {{full_name}}</li>
+      <li><strong>Phone:</strong> {{phone}}</li>
+      <li><strong>Email:</strong> {{email}}</li>
+      <li><strong>What describes you best:</strong> {{what_describes_you_best}}</li>
+      <li><strong>Years of Experience (YOE):</strong> {{YOE}}</li>
+      <li><strong>Highest Qualification:</strong> {{highest_qualification}}</li>
+      <li><strong>Current Organization:</strong> {{current_org}}</li>
+      <li><strong>Location:</strong> {{location}}</li>
+    </ul>
+
+  </div>
+
+</body>
+</html>
