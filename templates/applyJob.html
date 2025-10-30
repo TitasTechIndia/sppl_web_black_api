@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>New Job Application</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f6f6f6;
+    padding: 20px;
+  }
+  .container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 6px;
+    max-width: 600px;
+    margin: auto;
+    border: 1px solid #e5e5e5;
+  }
+  h2 {
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+  }
+  .info {
+    margin: 14px 0;
+    font-size: 15px;
+  }
+  .label {
+    font-weight: bold;
+    color: #555;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>New Job Application Received</h2>
+
+  <div class="info"><span class="label">Full Name:</span> {{full_name}}</div>
+  <div class="info"><span class="label">Phone:</span> {{phone}}</div>
+  <div class="info"><span class="label">Email:</span> {{email}}</div>
+  <div class="info"><span class="label">Position Applied For:</span> {{position}}</div>
+  <div class="info"><span class="label">Experience (Years):</span> {{experience_years}}</div>
+  <div class="info"><span class="label">Notice Period:</span> {{notice_period}}</div>
+  <div class="info"><span class="label">Current Location:</span> {{location}}</div>
+
+  <p>📎 Resume is attached with this email.</p>
+</div>
+
+</body>
+</html>

@@ -227,6 +227,84 @@ app.post("/share-your-profile", upload.single("documents"), async (req, res) => 
   }
 });
 
+app.post("/apply/job", upload.single("documents"), async (req, res) => {
+  try {
+    const {
+      full_name,
+      phone,
+      email,
+      experience_years,
+      location,
+      notice_period,
+      position
+    } = req.body;
+
+    // ✅ Required Field Validation
+    if (!full_name || !phone || !email) {
+      return res.status(400).json({ error: "Full Name, Phone Number, and Email are required" });
+    }
+
+    // ✅ Email Validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: "Invalid email format" });
+    }
+
+    // ✅ Phone Validation
+    const phoneRegex = /^[0-9]{10,15}$/;
+    if (!phoneRegex.test(phone)) {
+      return res.status(400).json({ error: "Invalid phone number" });
+    }
+
+    // ✅ Load & Build Email Template
+    const templatePath = path.join(__dirname, "templates/applyJob.html");
+    let htmlTemplate = fs.readFileSync(templatePath, "utf8");
+
+    htmlTemplate = htmlTemplate
+      .replace(/{{full_name}}/g, escapeHtml(full_name))
+      .replace(/{{phone}}/g, escapeHtml(phone))
+      .replace(/{{email}}/g, escapeHtml(email))
+      .replace(/{{experience_years}}/g, escapeHtml(experience_years || "-"))
+      .replace(/{{location}}/g, escapeHtml(location || "-"))
+      .replace(/{{notice_period}}/g, escapeHtml(notice_period || "-"))
+      .replace(/{{position}}/g, escapeHtml(position || "-"));
+
+    // ✅ Email Config
+    const transporter = nodemailer.createTransport({
+      service: process.env.EMAIL_SERVICE || "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      from: `"Job Application" <${process.env.EMAIL_USER}>`,
+      to: process.env.RECEIVER_EMAIL,
+      subject: `New Job Application - ${position || "Position Not Specified"}`,
+      html: htmlTemplate,
+      attachments: []
+    };
+
+    // ✅ Attach File if Uploaded
+    if (req.file) {
+      mailOptions.attachments.push({
+        filename: req.file.originalname,
+        content: req.file.buffer,
+        contentType: req.file.mimetype,
+      });
+    }
+
+    await transporter.sendMail(mailOptions);
+
+    res.json({ message: "✅ Job application submitted successfully!" });
+
+  } catch (error) {
+    console.error("Error /apply/job :: ", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // Helpers to prevent HTML injection and preserve newlines
 function escapeHtml(unsafe) {
   return String(unsafe)
