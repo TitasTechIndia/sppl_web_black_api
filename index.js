@@ -12,7 +12,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const allowedOrigins = ["http://localhost:3030", "https://sathiplanners.com/", "https://sathiplanners.com"];
+const allowedOrigins = ["http://localhost:3030", "https://sathiplanners.com/", "https://sathiplanners.com", "http://localhost:4173"];
 
 // Security middlewares
 app.use(helmet());
