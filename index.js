@@ -71,82 +71,83 @@ app.get("/", (req, res) => res.json("Hello, API is working !!"));
 app.get("/health", (req, res) => res.json({ status: "healthy" }));
 
 // POST endpoint receives form fields and a single file input named "file"
-// app.post("/contactus", upload.single("file"), async (req, res) => {
-//   try {
-//     const {
-//       full_name,
-//       phone_number,
-//       email_id,
-//       organization,
-//       subject,
-//       inquiry_details
-//     } = req.body;
+app.post("/contactus", upload.single("file"), async (req, res) => {
+  try {
+    const {
+      full_name,
+      phone_number,
+      email_id,
+      organization,
+      subject,
+      inquiry_details
+    } = req.body;
 
-//     // ✅ Required & Format Validation
-//     if (!full_name || !phone_number || !email_id) {
-//       return res.status(400).json({ error: "Full Name, Phone Number and Email are required" });
-//     }
+    // ✅ Required Field Validation
+    if (!full_name || !phone_number || !email_id) {
+      return res.status(400).json({ error: "Full Name, Phone Number and Email are required" });
+    }
 
-//     // Email validation (basic)
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     if (!emailRegex.test(email_id)) {
-//       return res.status(400).json({ error: "Invalid email format" });
-//     }
+    // ✅ Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email_id)) {
+      return res.status(400).json({ error: "Invalid email format" });
+    }
 
-//     // Phone validation (10-15 digits)
-//     const phoneRegex = /^[0-9]{10,15}$/;
-//     if (!phoneRegex.test(phone_number)) {
-//       return res.status(400).json({ error: "Invalid phone number" });
-//     }
+    // ✅ Phone validation
+    const phoneRegex = /^[0-9]{10,15}$/;
+    if (!phoneRegex.test(phone_number)) {
+      return res.status(400).json({ error: "Invalid phone number" });
+    }
 
-//     // ✅ Load email template
-//     const templatePath = path.join(__dirname, "templates/contactUs.html");
-//     let htmlTemplate = fs.readFileSync(templatePath, "utf8");
+    // ✅ Load & Build Email Template
+    const templatePath = path.join(__dirname, "templates/contactUs.html");
+    let htmlTemplate = fs.readFileSync(templatePath, "utf8");
 
-//     htmlTemplate = htmlTemplate
-//       .replace(/{{full_name}}/g, escapeHtml(full_name))
-//       .replace(/{{phone_number}}/g, escapeHtml(phone_number))
-//       .replace(/{{email_id}}/g, escapeHtml(email_id))
-//       .replace(/{{organization}}/g, escapeHtml(organization || "-"))
-//       .replace(/{{subject}}/g, escapeHtml(subject || "-"))
-//       .replace(/{{inquiry_details}}/g, nl2br(escapeHtml(inquiry_details || "-")));
+    htmlTemplate = htmlTemplate
+      .replace(/{{full_name}}/g, escapeHtml(full_name))
+      .replace(/{{phone_number}}/g, escapeHtml(phone_number))
+      .replace(/{{email_id}}/g, escapeHtml(email_id))
+      .replace(/{{organization}}/g, escapeHtml(organization || "-"))
+      .replace(/{{subject}}/g, escapeHtml(subject || "-"))
+      .replace(/{{inquiry_details}}/g, nl2br(escapeHtml(inquiry_details || "-")));
 
-//     // Email Config
-//     const transporter = nodemailer.createTransport({
-//       service: process.env.EMAIL_SERVICE || "gmail",
-//       auth: {
-//         user: process.env.EMAIL_USER,
-//         pass: process.env.EMAIL_PASS,
-//       },
-//     });
+    // ✅ Email Config
+    const transporter = nodemailer.createTransport({
+      service: process.env.EMAIL_SERVICE || "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
 
-//     const mailOptions = {
-//       from: `"Website Contact" <${process.env.EMAIL_USER}>`,
-//       to: process.env.RECEIVER_EMAIL,
-//       subject: subject || "New Inquiry",
-//       html: htmlTemplate,
-//       attachments: []
-//     };
+    const mailOptions = {
+      from: `"Website Contact" <${process.env.EMAIL_USER}>`,
+      to: process.env.RECEIVER_EMAIL,
+      subject: subject || "New Inquiry",
+      html: htmlTemplate,
+      attachments: []
+    };
 
-//     if (req.file) {
-//       mailOptions.attachments.push({
-//         filename: req.file.originalname,
-//         content: req.file.buffer,
-//         contentType: req.file.mimetype,
-//       });
-//     }
+    // ✅ File Attachment
+    if (req.file) {
+      mailOptions.attachments.push({
+        filename: req.file.originalname,
+        content: req.file.buffer,
+        contentType: req.file.mimetype,
+      });
+    }
 
-//     await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
 
-//     res.json({ message: "✅ Submission successful. We will contact you soon!" });
+    res.json({ message: "✅ Inquiry submitted! We will contact you soon." });
 
-//   } catch (err) {
-//     console.error("Error /contactus :: ", err);
-//     return res.status(500).json({ error: "Internal server error" });
-//   }
-// });
+  } catch (err) {
+    console.error("Error /contactus :: ", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
-app.post("/contactus", upload.single("documents"), async (req, res) => {
+app.post("/share-your-profile", upload.single("documents"), async (req, res) => {
   try {
     const {
       full_name,
@@ -225,7 +226,6 @@ app.post("/contactus", upload.single("documents"), async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 // Helpers to prevent HTML injection and preserve newlines
 function escapeHtml(unsafe) {
